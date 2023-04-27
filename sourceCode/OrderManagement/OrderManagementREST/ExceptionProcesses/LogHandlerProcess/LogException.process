@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx2="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx="http://www.EniqueSolutions.com/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.EniqueSolutions.com/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewLogException.xsd"/>
+    <pd:name>ExceptionProcesses/LogHandlerProcess/LogException.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:LogException"/>
+    <pd:startX>141</pd:startX>
+    <pd:startY>103</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>476</pd:endX>
+    <pd:endY>102</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1677645106151</pd:targetNamespace>
+    <pd:activity name="LOGHANDLER">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>305</pd:x>
+        <pd:y>102</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>INSERT INTO EC_LOGHANDLER (APPLICATION_NAME, PROCESS_NAME,
+ LOGTYPE, CORRELATIONID,MESSAGE_TYPE, TIMESTAMP, PAYLOAD)
+  VALUES (?, ?, ?, ?, ?, ?, ?)</statement>
+            <jdbcSharedConfig>/SharedResources/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>APPLICATION_NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PROCESS_NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>LOGTYPE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>CORRELATIONID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>MESSAGETYPE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>TIMESTAMP</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PAYLOAD</parameterName>
+                    <dataType>CLOB</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx2:LogException">
+                <jdbcUpdateActivityInput>
+                    <APPLICATION_NAME>
+                        <xsl:choose>
+                            <xsl:when test="exists(pfx2:ApplicationName)">
+                                <xsl:value-of select="pfx2:ApplicationName"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </APPLICATION_NAME>
+                    <PROCESS_NAME>
+                        <xsl:choose>
+                            <xsl:when test="exists(pfx2:ProcessName)">
+                                <xsl:value-of select="pfx2:ProcessName"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </PROCESS_NAME>
+                    <LOGTYPE>
+                        <xsl:value-of select="pfx2:LogType"/>
+                    </LOGTYPE>
+                    <CORRELATIONID>
+                        <xsl:value-of select="pfx2:CorrelationID"/>
+                    </CORRELATIONID>
+                    <MESSAGETYPE>
+                        <xsl:value-of select="pfx2:MessageType"/>
+                    </MESSAGETYPE>
+                    <TIMESTAMP>
+                        <xsl:value-of select="pfx2:Timestamp"/>
+                    </TIMESTAMP>
+                    <PAYLOAD>
+                        <xsl:value-of select="pfx2:Payload"/>
+                    </PAYLOAD>
+                </jdbcUpdateActivityInput>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>LOGHANDLER</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LOGHANDLER</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

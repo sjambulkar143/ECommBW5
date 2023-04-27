@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2"
+	 targetNamespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="CreateOrderReq" type="CreateOrderReqType"/>
+	<xs:complexType name="CreateOrderReqType">
+		<xs:sequence>
+			<xs:element ref="Order_ID"/>
+			<xs:element ref="Customer_ID" minOccurs="0"/>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Quantity" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="Discount" minOccurs="0"/>
+			<xs:element ref="Order_Status" minOccurs="0"/>
+			<xs:element ref="Order_Date" minOccurs="0"/>
+			<xs:element ref="Required_Date" minOccurs="0"/>
+			<xs:element ref="Shipped_Date" minOccurs="0"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Order_ID" type="xs:string"/>
+	<xs:element name="Customer_ID" type="xs:string"/>
+	<xs:element name="Product_ID" type="xs:string"/>
+	<xs:element name="Quantity" type="xs:string"/>
+	<xs:element name="List_Price" type="xs:integer"/>
+	<xs:element name="Discount" type="xs:integer"/>
+	<xs:element name="Order_Status" type="xs:string"/>
+	<xs:element name="Order_Date" type="xs:string"/>
+	<xs:element name="Required_Date" type="xs:string"/>
+	<xs:element name="Shipped_Date" type="xs:string"/>
+	<xs:element name="Correlation_ID" type="xs:string"/>
+	<xs:element name="CreateOrderRes" type="CreateOrderResType"/>
+	<xs:complexType name="CreateOrderResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResponseMessage" type="xs:string"/>
+	<xs:element name="UpdateOrderReq" type="UpdateOrderReqType"/>
+	<xs:complexType name="UpdateOrderReqType">
+		<xs:sequence>
+			<xs:element ref="Order_ID" minOccurs="0"/>
+			<xs:element ref="Customer_ID" minOccurs="0"/>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Quantity" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="Discount" minOccurs="0"/>
+			<xs:element ref="Order_Status" minOccurs="0"/>
+			<xs:element ref="Order_Date" minOccurs="0"/>
+			<xs:element ref="Required_Date" minOccurs="0"/>
+			<xs:element ref="Shipped_Date" minOccurs="0"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateOrderRes" type="UpdateOrderResType"/>
+	<xs:complexType name="UpdateOrderResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CancleOrderReq" type="CancleOrderReqType"/>
+	<xs:complexType name="CancleOrderReqType">
+		<xs:sequence>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CancleOrderRes" type="CancleOrderResType"/>
+	<xs:complexType name="CancleOrderResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetOrderReq" type="GetOrderReqType"/>
+	<xs:complexType name="GetOrderReqType">
+		<xs:sequence>
+			<xs:element ref="Product_ID"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetOrderRes" type="GetOrderResType" nillable="true"/>
+	<xs:complexType name="GetOrderResType">
+		<xs:sequence>
+			<xs:element ref="Order_ID" minOccurs="0"/>
+			<xs:element ref="Customer_ID" minOccurs="0"/>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Quantity" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="Discount" minOccurs="0"/>
+			<xs:element ref="Order_Status" minOccurs="0"/>
+			<xs:element ref="Order_Date" minOccurs="0"/>
+			<xs:element ref="Required_Date" minOccurs="0"/>
+			<xs:element ref="Shipped_Date" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetOrderHistoryReq" type="GetOrderHistoryReqType"/>
+	<xs:complexType name="GetOrderHistoryReqType">
+		<xs:sequence>
+			<xs:element ref="GetOrderRecord"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetOrderHistoryRes" type="GetOrderHistoryResType"/>
+	<xs:complexType name="GetOrderHistoryResType">
+		<xs:sequence>
+			<xs:element ref="Order_ID" minOccurs="0"/>
+			<xs:element ref="Customer_ID" minOccurs="0"/>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Quantity" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="Discount" minOccurs="0"/>
+			<xs:element ref="Order_Status" minOccurs="0"/>
+			<xs:element ref="Order_Date" minOccurs="0"/>
+			<xs:element ref="Required_Date" minOccurs="0"/>
+			<xs:element ref="Shipped_Date" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetOrderRecord" type="xs:string"/>
+	<xs:element name="GetOrderHistoryres">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="GetOrderHistoryRes" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetOrderres" nillable="true">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="GetOrderRes" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ResponseMessage" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetOrderHistoryResTypeType">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="GetOrderHistoryRes" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

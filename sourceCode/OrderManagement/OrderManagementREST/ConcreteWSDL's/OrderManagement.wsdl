@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns1="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" xmlns:tns="http://xmlns.example.com/1677844825882" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://xmlns.example.com/1677844825882">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="CancleOrderReqType">
+                <xs:sequence>
+                    <xs:element ref="ns0:Product_ID"/>
+                    <xs:element ref="ns0:Correlation_ID" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CancleOrderResType">
+                <xs:sequence>
+                    <xs:element ref="ns0:ResponseMessage"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CreateOrderReqType">
+                <xs:sequence>
+                    <xs:element ref="ns0:Order_ID"/>
+                    <xs:element ref="ns0:Customer_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Product_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Quantity" minOccurs="0"/>
+                    <xs:element ref="ns0:List_Price" minOccurs="0"/>
+                    <xs:element ref="ns0:Discount" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Status" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Required_Date"/>
+                    <xs:element ref="ns0:Shipped_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Correlation_ID"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CreateOrderResType">
+                <xs:sequence>
+                    <xs:element ref="ns0:ResponseMessage"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetOrderHistoryReqType">
+                <xs:sequence>
+                    <xs:element ref="ns0:GetOrderRecord"/>
+                    <xs:element ref="ns0:Correlation_ID" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetOrderHistoryResType">
+                <xs:sequence>
+                    <xs:element ref="ns0:Order_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Customer_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Product_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Quantity" minOccurs="0"/>
+                    <xs:element ref="ns0:List_Price" minOccurs="0"/>
+                    <xs:element ref="ns0:Discount" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Status" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Required_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Shipped_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:ResponseMessage" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetOrderReqType">
+                <xs:sequence>
+                    <xs:element ref="ns0:Product_ID"/>
+                    <xs:element ref="ns0:Correlation_ID" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetOrderResType">
+                <xs:sequence>
+                    <xs:element ref="ns0:Order_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Customer_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Product_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Quantity" minOccurs="0"/>
+                    <xs:element ref="ns0:List_Price" minOccurs="0"/>
+                    <xs:element ref="ns0:Discount" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Status" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Required_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Shipped_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:ResponseMessage" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateOrderReqType">
+                <xs:sequence>
+                    <xs:element ref="ns0:Order_ID"/>
+                    <xs:element ref="ns0:Customer_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Product_ID" minOccurs="0"/>
+                    <xs:element ref="ns0:Quantity"/>
+                    <xs:element ref="ns0:List_Price" minOccurs="0"/>
+                    <xs:element ref="ns0:Discount" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Status" minOccurs="0"/>
+                    <xs:element ref="ns0:Order_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Required_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Shipped_Date" minOccurs="0"/>
+                    <xs:element ref="ns0:Correlation_ID" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateOrderResType">
+                <xs:sequence>
+                    <xs:element ref="ns0:ResponseMessage"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="CancleOrderReq" type="ns0:CancleOrderReqType"/>
+            <xs:element name="CancleOrderRes" type="ns0:CancleOrderResType"/>
+            <xs:element name="Correlation_ID" type="xs:string"/>
+            <xs:element name="CreateOrderReq" type="ns0:CreateOrderReqType"/>
+            <xs:element name="CreateOrderRes" type="ns0:CreateOrderResType"/>
+            <xs:element name="Customer_ID" type="xs:integer"/>
+            <xs:element name="Discount" type="xs:integer"/>
+            <xs:element name="GetOrderHistoryReq" type="ns0:GetOrderHistoryReqType"/>
+            <xs:element name="GetOrderHistoryRes" type="ns0:GetOrderHistoryResType"/>
+            <xs:element name="GetOrderHistoryres">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:GetOrderHistoryRes" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderRecord" type="xs:string"/>
+            <xs:element name="GetOrderReq" type="ns0:GetOrderReqType"/>
+            <xs:element name="GetOrderRes" type="ns0:GetOrderResType"/>
+            <xs:element name="GetOrderres">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:GetOrderRes" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="List_Price" type="xs:integer"/>
+            <xs:element name="Order_Date" type="xs:date"/>
+            <xs:element name="Order_ID" type="xs:string"/>
+            <xs:element name="Order_Status" type="xs:string"/>
+            <xs:element name="Product_ID" type="xs:integer"/>
+            <xs:element name="Quantity" type="xs:string"/>
+            <xs:element name="Required_Date" type="xs:date"/>
+            <xs:element name="ResponseMessage" type="xs:string"/>
+            <xs:element name="Shipped_Date" type="xs:date"/>
+            <xs:element name="UpdateOrderReq" type="ns0:UpdateOrderReqType"/>
+            <xs:element name="UpdateOrderRes" type="ns0:UpdateOrderResType"/>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="FaultType">
+                <xs:sequence>
+                    <xs:element ref="ns1:StackTrace" minOccurs="0"/>
+                    <xs:element ref="ns1:Message" minOccurs="0"/>
+                    <xs:element ref="ns1:MessageCode" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Fault" type="ns1:FaultType"/>
+            <xs:element name="Message" type="xs:string"/>
+            <xs:element name="MessageCode" type="xs:string"/>
+            <xs:element name="StackTrace" type="xs:string"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="LatestOrderManagement-service0">
+        <wsdl:port name="OrderManagementEndpoint0" binding="tns:OrderManagementEndpoint0Binding">
+            <soap:address location=""/>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">shivam.queue</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="OrderManagement">
+        <wsdl:operation name="UpdateOrder">
+            <wsdl:input message="tns:UpdateOrderReq"/>
+            <wsdl:output message="tns:UreateOrderRes"/>
+            <wsdl:fault name="fault1" message="tns:FaultSchema"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderHistoryDetails">
+            <wsdl:input message="tns:GetOrderHistoryReq"/>
+            <wsdl:output message="tns:GetOrderHistoryRes"/>
+            <wsdl:fault name="fault1" message="tns:FaultSchema"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateOrder">
+            <wsdl:input message="tns:CreateOrderReq"/>
+            <wsdl:output message="tns:CreateOrderRes"/>
+            <wsdl:fault name="fault1" message="tns:FaultSchema"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteOrder">
+            <wsdl:input message="tns:DeleteOrderReq"/>
+            <wsdl:output message="tns:DeleteOrderRes"/>
+            <wsdl:fault name="fault1" message="tns:FaultSchema"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderDetails">
+            <wsdl:input message="tns:GetOrderReq"/>
+            <wsdl:output message="tns:GetOrderRes"/>
+            <wsdl:fault name="fault1" message="tns:FaultSchema"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="OrderManagementEndpoint0Binding" type="tns:OrderManagement">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="UpdateOrder">
+            <soap:operation style="document" soapAction="/WSDL's/LatestOrderManagement-service0.serviceagent/OrderManagementEndpoint0/UpdateOrder"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="UpdateOrderReq"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="UreateOrderRes"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderHistoryDetails">
+            <soap:operation style="document" soapAction="/WSDL's/LatestOrderManagement-service0.serviceagent/OrderManagementEndpoint0/GetOrderHistoryDetails"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="GetOrderHistoryReq"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="GetOrderHistoryRes"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CreateOrder">
+            <soap:operation style="document" soapAction="/WSDL's/LatestOrderManagement-service0.serviceagent/OrderManagementEndpoint0/CreateOrder"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="CreateOrderReq"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="CreateOrderRes"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteOrder">
+            <soap:operation style="document" soapAction="/WSDL's/LatestOrderManagement-service0.serviceagent/OrderManagementEndpoint0/DeleteOrder"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="DeleteOrderReq"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="DeleteOrderRes"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderDetails">
+            <soap:operation style="document" soapAction="/WSDL's/LatestOrderManagement-service0.serviceagent/OrderManagementEndpoint0/GetOrderDetails"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="GetOrderReq"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="GetOrderRes"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="UpdateOrderReq">
+        <wsdl:part name="UpdateOrderReq" element="ns0:UpdateOrderReq"/>
+    </wsdl:message>
+    <wsdl:message name="UreateOrderRes">
+        <wsdl:part name="UreateOrderRes" element="ns0:UpdateOrderRes"/>
+    </wsdl:message>
+    <wsdl:message name="FaultSchema">
+        <wsdl:part name="FaultSchema" element="ns1:Fault"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderHistoryReq">
+        <wsdl:part name="GetOrderHistoryReq" element="ns0:GetOrderHistoryReq"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderHistoryRes">
+        <wsdl:part name="GetOrderHistoryRes" element="ns0:GetOrderHistoryRes"/>
+    </wsdl:message>
+    <wsdl:message name="CreateOrderReq">
+        <wsdl:part name="CreateOrderReq" element="ns0:CreateOrderReq"/>
+    </wsdl:message>
+    <wsdl:message name="CreateOrderRes">
+        <wsdl:part name="CreateOrderRes" element="ns0:CreateOrderRes"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteOrderReq">
+        <wsdl:part name="DeleteOrderReq" element="ns0:CancleOrderReq"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteOrderRes">
+        <wsdl:part name="DeleteOrderRes" element="ns0:CancleOrderRes"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderReq">
+        <wsdl:part name="GetOrderReq" element="ns0:GetOrderReq"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderRes">
+        <wsdl:part name="GetOrderRes" element="ns0:GetOrderres"/>
+    </wsdl:message>
+</wsdl:definitions>

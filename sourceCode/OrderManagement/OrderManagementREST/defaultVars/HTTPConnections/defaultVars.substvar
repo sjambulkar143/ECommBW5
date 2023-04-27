@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>Host</name>
+			<value>localhost</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1677736434601</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Port</name>
+			<value>502</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>Integer</type>
+			<modTime>1677736434628</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Port2</name>
+			<value>7311</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>Integer</type>
+			<modTime>1682573634819</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

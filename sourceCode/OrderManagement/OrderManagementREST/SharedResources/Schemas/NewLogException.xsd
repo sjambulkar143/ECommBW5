@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2"
+	 targetNamespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="LogException" type="LogExceptionType"/>
+	<xs:complexType name="LogExceptionType">
+		<xs:sequence>
+			<xs:element ref="ApplicationName" minOccurs="0"/>
+			<xs:element ref="ProcessName" minOccurs="0"/>
+			<xs:element ref="LogType" minOccurs="0"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+			<xs:element ref="MessageType" minOccurs="0"/>
+			<xs:element ref="Timestamp" minOccurs="0"/>
+			<xs:element ref="Payload" minOccurs="0"/>
+			<xs:element ref="ExceptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ApplicationName" type="xs:string"/>
+	<xs:element name="ProcessName" type="xs:string"/>
+	<xs:element name="LogType" type="xs:string"/>
+	<xs:element name="CorrelationID" type="xs:string"/>
+	<xs:element name="MessageType" type="xs:string"/>
+	<xs:element name="Timestamp" type="xs:string"/>
+	<xs:element name="Payload" type="xs:string"/>
+	<xs:element name="ExceptionType" type="Exceptiontype"/>
+	<xs:complexType name="Exceptiontype">
+		<xs:sequence>
+			<xs:element ref="MessageCode" minOccurs="0"/>
+			<xs:element ref="ExceptionMessage" minOccurs="0"/>
+			<xs:element ref="StackTrace" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MessageCode" type="xs:string"/>
+	<xs:element name="ExceptionMessage" type="xs:string"/>
+	<xs:element name="StackTrace" type="xs:string"/>
+</xs:schema>

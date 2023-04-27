@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd3"
+	 targetNamespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd3"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="LoginReq" type="LoginReqType"/>
+	<xs:complexType name="LoginReqType">
+		<xs:sequence>
+			<xs:element ref="Customer_ID"/>
+			<xs:element ref="Password"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoginRes" type="LoginResType"/>
+	<xs:complexType name="LoginResType">
+		<xs:sequence>
+			<xs:element ref="Customer_ID" minOccurs="0"/>
+			<xs:element ref="Session_ID" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Customer_ID" type="xs:string"/>
+	<xs:element name="Password" type="xs:string"/>
+	<xs:element name="Correlation_ID" type="xs:string"/>
+	<xs:element name="Session_ID" type="xs:string"/>
+	<xs:element name="ResponseMessage" type="xs:string"/>
+	<xs:element name="ValidateSessionReq" type="ValidateSessionReqType"/>
+	<xs:complexType name="ValidateSessionReqType">
+		<xs:sequence>
+			<xs:element ref="UserName"/>
+			<xs:element ref="Customer_ID"/>
+			<xs:element ref="Correlation_ID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateSessionRes" type="ValidateSessionResType"/>
+	<xs:complexType name="ValidateSessionResType">
+		<xs:sequence>
+			<xs:element ref="UserName" minOccurs="0"/>
+			<xs:element ref="Session_ID" minOccurs="0"/>
+			<xs:element ref="Customer_ID" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserName" type="xs:string"/>
+</xs:schema>

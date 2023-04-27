@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" xmlns:pfx2="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:ns12="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/OrderManagement.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" schemaLocation="/SharedResources/Schemas/NewFaultSchema.xsd"/>
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewOrderManagement.xsd"/>
+    <pd:name>Processes/SubProcess/GetOrderHistory.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:GetOrderHistoryReq"/>
+    <pd:startX>146</pd:startX>
+    <pd:startY>113</pd:startY>
+    <pd:returnBindings>
+        <pfx2:GetOrderHistoryResTypeType>
+            <xsl:for-each select="$Product_ID/resultSet/Record">
+                <pfx2:GetOrderHistoryRes>
+                    <xsl:if test="ORDER_ID">
+                        <pfx2:Order_ID>
+                            <xsl:value-of select="ORDER_ID"/>
+                        </pfx2:Order_ID>
+                    </xsl:if>
+                    <xsl:if test="CUSTOMER_ID">
+                        <pfx2:Customer_ID>
+                            <xsl:value-of select="CUSTOMER_ID"/>
+                        </pfx2:Customer_ID>
+                    </xsl:if>
+                    <pfx2:Product_ID>
+                        <xsl:value-of select="PRODUCT_ID"/>
+                    </pfx2:Product_ID>
+                    <pfx2:Quantity>
+                        <xsl:value-of select="QUANTITY"/>
+                    </pfx2:Quantity>
+                    <pfx2:List_Price>
+                        <xsl:value-of select="round(LIST_PRICE)"/>
+                    </pfx2:List_Price>
+                    <pfx2:Discount>
+                        <xsl:value-of select="round(DISCOUNT)"/>
+                    </pfx2:Discount>
+                    <pfx2:Order_Status>
+                        <xsl:value-of select="ORDER_STATUS"/>
+                    </pfx2:Order_Status>
+                    <xsl:if test="ORDER_DATE">
+                        <pfx2:Order_Date>
+                            <xsl:value-of select="ORDER_DATE"/>
+                        </pfx2:Order_Date>
+                    </xsl:if>
+                    <xsl:if test="REQUIRED_DATE">
+                        <pfx2:Required_Date>
+                            <xsl:value-of select="REQUIRED_DATE"/>
+                        </pfx2:Required_Date>
+                    </xsl:if>
+                    <xsl:if test="SHIPPED_DATE">
+                        <pfx2:Shipped_Date>
+                            <xsl:value-of select="SHIPPED_DATE"/>
+                        </pfx2:Shipped_Date>
+                    </xsl:if>
+                </pfx2:GetOrderHistoryRes>
+            </xsl:for-each>
+        </pfx2:GetOrderHistoryResTypeType>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:GetOrderHistoryResTypeType"/>
+    <pd:endX>541</pd:endX>
+    <pd:endY>234</pd:endY>
+    <pd:errorSchemas>
+        <FaultSchema ref="pfx3:Fault"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1677731605338</pd:targetNamespace>
+    <pd:activity name="Product_ID">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>235</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>SELECT ORDER_ID, CUSTOMER_ID, PRODUCT_ID, QUANTITY, LIST_PRICE,
+  DISCOUNT, ORDER_STATUS, ORDER_DATE, REQUIRED_DATE, SHIPPED_DATE
+  FROM SYSTEM.ES_ORDERS
+</statement>
+            <Prepared_Param_DataType/>
+            <jdbcSharedConfig>/SharedResources/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <QueryOutputCachedSchemaColumns>ORDER_ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CUSTOMER_ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>PRODUCT_ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>QUANTITY</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>LIST_PRICE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>DISCOUNT</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ORDER_STATUS</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ORDER_DATE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>DATE</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>REQUIRED_DATE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>DATE</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>SHIPPED_DATE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>DATE</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <oraObjects/>
+            <oraTables/>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CatchAllErrors">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>713</pd:x>
+        <pd:y>349</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CatchProductID">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>687</pd:x>
+        <pd:y>80</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Fault namespace=http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>289</pd:x>
+        <pd:y>367</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <pfx3:Fault>
+                        <pfx3:Message>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </pfx3:Message>
+                    </pfx3:Fault>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>425</pd:x>
+        <pd:y>237</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <xsl:if test="$_processContext/ns1:ProcessContext/ProjectName">
+                    <ns12:ApplicationName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns12:ApplicationName>
+                </xsl:if>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;GetOrderHistorySOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:GetOrderHistoryReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($Product_ID/resultSet/Record[1])"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>150</pd:x>
+        <pd:y>232</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;GetOrderHistorySOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:GetOrderHistoryReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="$Start/pfx2:GetOrderHistoryReq/pfx2:GetOrderRecord"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandler">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>533</pd:x>
+        <pd:y>87</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;GetOrderHistoryDetailsSOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:GetOrderHistoryReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchProductID/pfx3:Fault)"/>
+                </ns12:Payload>
+                <ns12:ExceptionType>
+                    <ns12:MessageCode>
+                        <xsl:value-of select="$CatchProductID/pfx3:Fault/pfx3:MessageCode"/>
+                    </ns12:MessageCode>
+                    <ns12:ExceptionMessage>
+                        <xsl:value-of select="$CatchProductID/pfx3:Fault/pfx3:Message"/>
+                    </ns12:ExceptionMessage>
+                    <ns12:StackTrace>
+                        <xsl:value-of select="$CatchProductID/pfx3:Fault/pfx3:StackTrace"/>
+                    </ns12:StackTrace>
+                </ns12:ExceptionType>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerFile">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>351</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;GetOrderHistoryDetailsSOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:GetOrderHistoryReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchAllErrors/exceptiondata)"/>
+                </ns12:Payload>
+                <ns12:ExceptionType>
+                    <ns12:MessageCode>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/MsgCode"/>
+                    </ns12:MessageCode>
+                    <ns12:ExceptionMessage>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                    </ns12:ExceptionMessage>
+                    <ns12:StackTrace>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/StackTrace"/>
+                    </ns12:StackTrace>
+                </ns12:ExceptionType>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Product_ID</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>1=1</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Product_ID</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65485</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Product_ID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchProductID</pd:from>
+        <pd:to>ExceptionHandler</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandler</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchAllErrors</pd:from>
+        <pd:to>ExceptionHandlerFile</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerFile</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

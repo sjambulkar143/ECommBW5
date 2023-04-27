@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns12="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" xmlns:ns2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" xmlns:pfx2="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:uuid="java://Custom.Custom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/OrderManagement.xsd"/>
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewOrderManagement.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" schemaLocation="/SharedResources/Schemas/NewFaultSchema.xsd"/>
+    <pd:name>Processes/SubProcess/CreateOrder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:CreateOrderReq"/>
+    <pd:startX>27</pd:startX>
+    <pd:startY>35</pd:startY>
+    <pd:returnBindings>
+        <xsl:choose>
+            <xsl:when test="contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg1) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg2) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg3) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg6) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg7) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg8) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg9) or contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg10)">
+                <pfx2:CreateOrderRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error_CustomerNot-1/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateOrderRes>
+            </xsl:when>
+            <xsl:when test="contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg4)">
+                <pfx2:CreateOrderRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error_CustomerNot2/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateOrderRes>
+            </xsl:when>
+            <xsl:when test="contains($CatchProductID/pfx3:Fault/pfx3:MessageCode ,$_globalVariables/ns2:GlobalVariables/NewItem/Msg5)">
+                <pfx2:CreateOrderRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error_Generate-Error/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateOrderRes>
+            </xsl:when>
+            <xsl:when test="exists($_error/ns1:ErrorReport)">
+                <pfx2:CreateOrderRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateOrderRes>
+            </xsl:when>
+            <xsl:otherwise>
+                <pfx2:CreateOrderRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Success"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateOrderRes>
+            </xsl:otherwise>
+        </xsl:choose>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:CreateOrderRes"/>
+    <pd:endX>626</pd:endX>
+    <pd:endY>135</pd:endY>
+    <pd:errorSchemas>
+        <FaultSchema ref="pfx3:Fault"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1677731605338</pd:targetNamespace>
+    <pd:activity name="Product_ID">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>267</pd:x>
+        <pd:y>138</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>SELECT PRODUCT_ID
+  FROM ES_PRODUCTS WHERE PRODUCT_ID = ?
+</statement>
+            <jdbcSharedConfig>/SharedResources/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <QueryOutputCachedSchemaColumns>PRODUCT_ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <oraObjects/>
+            <oraTables/>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <PRODUCT_ID>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:CreateOrderReq/pfx2:Product_ID)">
+                            <xsl:value-of select="$Start/pfx2:CreateOrderReq/pfx2:Product_ID"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </PRODUCT_ID>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="INSERTPRODETAILS">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>411</pd:x>
+        <pd:y>136</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>INSERT INTO SYSTEM.ES_ORDERS (ORDER_ID, CUSTOMER_ID, PRODUCT_ID,
+  QUANTITY, LIST_PRICE, DISCOUNT, ORDER_STATUS, ORDER_DATE, REQUIRED_DATE,SHIPPED_DATE)  VALUES (?, ?, ?, ?, ?, ?, ?,  TO_DATE(?, 'yyyy-MM-dd'),  TO_DATE(?, 'yyyy-MM-dd'),  TO_DATE(?, 'yyyy-MM-dd'))</statement>
+            <jdbcSharedConfig>/SharedResources/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>ORDER_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>CUSTOMER_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>QUANTITY</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>LIST_PRICE</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>DISCOUNT</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>ORDER_STATUS</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>ORDER_DATE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>REQUIRED_DATE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>SHIPPED_DATE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx2:CreateOrderReq">
+                <jdbcUpdateActivityInput>
+                    <ORDER_ID>
+                        <xsl:value-of select="pfx2:Order_ID"/>
+                    </ORDER_ID>
+                    <CUSTOMER_ID>
+                        <xsl:value-of select="pfx2:Customer_ID"/>
+                    </CUSTOMER_ID>
+                    <PRODUCT_ID>
+                        <xsl:value-of select="pfx2:Product_ID"/>
+                    </PRODUCT_ID>
+                    <QUANTITY>
+                        <xsl:value-of select="pfx2:Quantity"/>
+                    </QUANTITY>
+                    <LIST_PRICE>
+                        <xsl:value-of select="pfx2:List_Price"/>
+                    </LIST_PRICE>
+                    <DISCOUNT>
+                        <xsl:value-of select="pfx2:Discount"/>
+                    </DISCOUNT>
+                    <ORDER_STATUS>
+                        <xsl:value-of select="pfx2:Order_Status"/>
+                    </ORDER_STATUS>
+                    <ORDER_DATE>
+                        <xsl:choose>
+                            <xsl:when test="exists(pfx2:Order_Date)">
+                                <xsl:value-of select="pfx2:Order_Date"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </ORDER_DATE>
+                    <REQUIRED_DATE>
+                        <xsl:value-of select="pfx2:Required_Date"/>
+                    </REQUIRED_DATE>
+                    <SHIPPED_DATE>
+                        <xsl:choose>
+                            <xsl:when test="exists(pfx2:Shipped_Date)">
+                                <xsl:value-of select="pfx2:Shipped_Date"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </SHIPPED_DATE>
+                </jdbcUpdateActivityInput>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CatchProductID">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>768</pd:x>
+        <pd:y>35</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Fault namespace=http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CatchAllErrors">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>786</pd:x>
+        <pd:y>256</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>269</pd:x>
+        <pd:y>269</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <pfx3:Fault>
+                        <pfx3:Message>
+                            <xsl:value-of select="&quot;ProductID not exists&quot;"/>
+                        </pfx3:Message>
+                        <pfx3:MessageCode>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg5"/>
+                        </pfx3:MessageCode>
+                    </pfx3:Fault>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CheckCustAvailability">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>107</pd:x>
+        <pd:y>137</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/SharedResources/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>select CUSTOMERID from CREATEACCOUNT  WHERE CUSTOMERID=?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>CUSTOMERID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <QueryOutputCachedSchemaColumns>CUSTOMERID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <oraObjects/>
+            <oraTables/>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <CUSTOMERID>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:CreateOrderReq/pfx2:Customer_ID)">
+                            <xsl:value-of select="$Start/pfx2:CreateOrderReq/pfx2:Customer_ID"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </CUSTOMERID>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CustomerNot2">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>109</pd:x>
+        <pd:y>267</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <pfx3:Fault>
+                        <pfx3:Message>
+                            <xsl:value-of select="&quot;Customer_ID must be Numeric Values&quot;"/>
+                        </pfx3:Message>
+                        <pfx3:MessageCode>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg4"/>
+                        </pfx3:MessageCode>
+                    </pfx3:Fault>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>533</pd:x>
+        <pd:y>136</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <xsl:if test="$_processContext/ns1:ProcessContext/ProjectName">
+                    <ns12:ApplicationName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns12:ApplicationName>
+                </xsl:if>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderSOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:CreateOrderReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>107</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderSOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:CreateOrderReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($Start/pfx2:CreateOrderReq)"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandler">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>626</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderSOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:CreateOrderReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchProductID/pfx3:Fault)"/>
+                </ns12:Payload>
+                <ns12:ExceptionType>
+                    <ns12:MessageCode>
+                        <xsl:value-of select="$CatchProductID/pfx3:Fault/pfx3:MessageCode"/>
+                    </ns12:MessageCode>
+                    <ns12:ExceptionMessage>
+                        <xsl:value-of select="$CatchProductID/pfx3:Fault/pfx3:Message"/>
+                    </ns12:ExceptionMessage>
+                    <ns12:StackTrace>
+                        <xsl:value-of select="$CatchProductID/pfx3:Fault/pfx3:StackTrace"/>
+                    </ns12:StackTrace>
+                </ns12:ExceptionType>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerFile">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>627</pd:x>
+        <pd:y>258</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderSOAPSub&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:CreateOrderReq/pfx2:Correlation_ID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchAllErrors/exceptiondata)"/>
+                </ns12:Payload>
+                <ns12:ExceptionType>
+                    <ns12:MessageCode>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/MsgCode"/>
+                    </ns12:MessageCode>
+                    <ns12:ExceptionMessage>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                    </ns12:ExceptionMessage>
+                    <ns12:StackTrace>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                    </ns12:StackTrace>
+                </ns12:ExceptionType>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CustomerNot-1">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>236</pd:x>
+        <pd:y>36</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <xsl:choose>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Customer_ID, &quot;^[a-zA-Z0-9_]*$&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Customer_ID must be Numeric Values&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg1"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateOrderReq/pfx2:Order_ID) = 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Order_ID should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg2"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateOrderReq/pfx2:Product_ID) = 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Product_ID should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg6"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Product_ID, &quot;^[a-zA-Z0-9_]*$&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Product_ID Accept only Alphanumeric Values&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg7"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Order_Date,'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$'))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Order date format should be YYYY-MM-DD HH:mm:ss&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg8"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Required_Date,'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$'))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Reqired date format should be YYYY-MM-DD HH:mm:ss&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg9"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Shipped_Date,'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$'))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Shipped date format should be YYYY-MM-DD HH:mm:ss&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg10"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Order_ID accept only Alphanumeric values&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/NewItem/Msg3"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Product_ID</pd:from>
+        <pd:to>INSERTPRODETAILS</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Product_ID/resultSet/Record/PRODUCT_ID)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>INSERTPRODETAILS</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Product_ID</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65485</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CheckCustAvailability</pd:from>
+        <pd:to>Product_ID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($CheckCustAvailability/resultSet/Record/CUSTOMERID)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CheckCustAvailability</pd:from>
+        <pd:to>CustomerNot2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>CheckCustAvailability</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Customer_ID, "^[a-zA-Z0-9_]*$") and  string-length($Start/pfx2:CreateOrderReq/pfx2:Order_ID) &gt;0 and  uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Order_ID, "^[a-zA-Z0-9_]*$") and string-length($Start/pfx2:CreateOrderReq/pfx2:Product_ID) &gt;0  and  uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Product_ID, "^[a-zA-Z0-9_]*$") and uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Order_Date,'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$') and  uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Required_Date,'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$') and  uuid:matchRegex($Start/pfx2:CreateOrderReq/pfx2:Shipped_Date,'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$')</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchProductID</pd:from>
+        <pd:to>ExceptionHandler</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandler</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchAllErrors</pd:from>
+        <pd:to>ExceptionHandlerFile</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerFile</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>CustomerNot-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

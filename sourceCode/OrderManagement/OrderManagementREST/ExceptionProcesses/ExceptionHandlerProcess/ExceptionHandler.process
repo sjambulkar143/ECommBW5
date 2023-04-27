@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx2="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx="http://www.EniqueSolutions.com/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.EniqueSolutions.com/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewLogException.xsd"/>
+    <pd:name>ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:LogException"/>
+    <pd:startX>142</pd:startX>
+    <pd:startY>103</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>476</pd:endX>
+    <pd:endY>102</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1677645106151</pd:targetNamespace>
+    <pd:activity name="EXCEPTIONHANDLER">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>305</pd:x>
+        <pd:y>103</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>INSERT INTO EC_EXCEPTIONHANDLER (APPLICATION_NAME, PROCESS_NAME,
+  LOGTYPE,CORRELATION_ID,MESSGAGETYPE, TIMESTAMP, PAYLOAD,MESSAGE_CODE,EXCEPTION_MESSAGE,STACK_TRACE)
+  VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)</statement>
+            <jdbcSharedConfig>/SharedResources/connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>APPLICATION_NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PROCESS_NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>LOGTYPE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>CORRELATIONID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>MESSAGETYPE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>TIMESTAMP</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PAYLOAD</parameterName>
+                    <dataType>CLOB</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>MESSGAECODE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>EXCEPTION_MESSAGE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>STACK_TRACE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <APPLICATION_NAME>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:ApplicationName)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:ApplicationName"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </APPLICATION_NAME>
+                <PROCESS_NAME>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:ProcessName)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:ProcessName"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </PROCESS_NAME>
+                <LOGTYPE>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:LogType)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:LogType"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </LOGTYPE>
+                <CORRELATIONID>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:CorrelationID)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:CorrelationID"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </CORRELATIONID>
+                <MESSAGETYPE>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:MessageType)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:MessageType"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </MESSAGETYPE>
+                <TIMESTAMP>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:Timestamp)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:Timestamp"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </TIMESTAMP>
+                <PAYLOAD>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:Payload)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:Payload"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </PAYLOAD>
+                <MESSGAECODE>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:ExceptionType/pfx2:MessageCode)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:ExceptionType/pfx2:MessageCode"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </MESSGAECODE>
+                <EXCEPTION_MESSAGE>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:ExceptionType/pfx2:ExceptionMessage)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:ExceptionType/pfx2:ExceptionMessage"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </EXCEPTION_MESSAGE>
+                <STACK_TRACE>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:LogException/pfx2:ExceptionType/pfx2:StackTrace)">
+                            <xsl:value-of select="$Start/pfx2:LogException/pfx2:ExceptionType/pfx2:StackTrace"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </STACK_TRACE>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>EXCEPTIONHANDLER</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EXCEPTIONHANDLER</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

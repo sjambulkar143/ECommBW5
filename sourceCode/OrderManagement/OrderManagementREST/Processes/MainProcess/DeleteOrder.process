@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:ns="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" xmlns:ns3="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:uuid="java://Custom.Custom" xmlns:ns12="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2">
+    <xsd:import namespace="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/OrderManagement.xsd"/>
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewOrderManagement.xsd"/>
+    <pd:name>Processes/MainProcess/DeleteOrder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="PRODUCT_ID" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>65</pd:startX>
+    <pd:startY>39</pd:startY>
+    <pd:returnBindings>
+        <EndResponse>
+            <xsl:value-of select="$Render-JSON/ns1:ActivityOutputClass/jsonString"/>
+        </EndResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="EndResponse" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>799</pd:endX>
+    <pd:endY>162</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <UUID>
+            <xsd:element name="UUID" type="xsd:string"/>
+        </UUID>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1677737055891</pd:targetNamespace>
+    <pd:activity name="CatchProductID">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>951</pd:x>
+        <pd:y>299</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Fault namespace=http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="DeleteOrder">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>353</pd:x>
+        <pd:y>158</pd:y>
+        <config>
+            <processName>/Processes/SubProcess/CancleOrder.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx:CancleOrderReq>
+                <pfx:Product_ID>
+                    <xsl:value-of select="$Start/PRODUCT_ID"/>
+                </pfx:Product_ID>
+                <pfx:Correlation_ID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx:Correlation_ID>
+            </pfx:CancleOrderReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>670</pd:x>
+        <pd:y>162</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;DeleteOrderREST&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="$Render-JSON/ns1:ActivityOutputClass/jsonString"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerFile">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>796</pd:x>
+        <pd:y>301</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CancelREST&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchProductID/ns3:Fault/ns3:StackTrace)"/>
+                </ns12:Payload>
+                <ns12:ExceptionType>
+                    <ns12:MessageCode>
+                        <xsl:value-of select="$CatchProductID/ns3:Fault/ns3:MessageCode"/>
+                    </ns12:MessageCode>
+                    <ns12:ExceptionMessage>
+                        <xsl:value-of select="$CatchProductID/ns3:Fault/ns3:Message"/>
+                    </ns12:ExceptionMessage>
+                    <ns12:StackTrace>
+                        <xsl:value-of select="$CatchProductID/ns3:Fault/ns3:StackTrace"/>
+                    </ns12:StackTrace>
+                </ns12:ExceptionType>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>518</pd:x>
+        <pd:y>161</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityInputEditor ref="pfx:CancleOrderRes"/>
+        </config>
+        <pd:inputBindings>
+            <ns1:ActivityInputClass>
+                <pfx:CancleOrderRes>
+                    <pfx:ResponseMessage>
+                        <xsl:value-of select="$DeleteOrder/pfx:CancleOrderRes/pfx:ResponseMessage"/>
+                    </pfx:ResponseMessage>
+                </pfx:CancleOrderRes>
+            </ns1:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>176</pd:x>
+        <pd:y>157</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <ns12:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProjectName"/>
+                </ns12:ApplicationName>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;DeleteOrderREST&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="$Start/PRODUCT_ID"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UUID">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>68</pd:x>
+        <pd:y>158</pd:y>
+        <config>
+            <variableName>UUID</variableName>
+        </config>
+        <pd:inputBindings>
+            <UUID>
+                <xsl:value-of select="uuid:getUUID()"/>
+            </UUID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DeleteOrder</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UUID</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>DeleteOrder</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchProductID</pd:from>
+        <pd:to>ExceptionHandlerFile</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerFile</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

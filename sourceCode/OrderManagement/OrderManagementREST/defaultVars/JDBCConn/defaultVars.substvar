@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>DatabaseURL</name>
+			<value>jdbc:oracle:thin:localhost:1521:orcl</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1682573500140</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JDBCDriver</name>
+			<value>oracle.jdbc.driver.OracleDriver (thin)</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1682573483300</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>LoginTimeOut</name>
+			<value>0</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>Integer</type>
+			<modTime>1682573470747</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>MaxConnection</name>
+			<value>10</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>Integer</type>
+			<modTime>1682573470734</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Password</name>
+			<value>#!KE+6LzfjraUPk9DZmVYjfbDnoVUiGrF/</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>Password</type>
+			<modTime>1682573470759</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>UserName</name>
+			<value>system</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1682573560644</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="java://Custom.Custom" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2">
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewOrderManagement.xsd"/>
+    <pd:name>Processes/SubProcess/RENDER.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1681210772228</pd:targetNamespace>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>260</pd:x>
+        <pd:y>47</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityInputEditor ref="pfx:UpdateOrderReq"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <pfx:UpdateOrderReq>
+                    <pfx:Order_ID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Order_ID>
+                    <pfx:Customer_ID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Customer_ID>
+                    <pfx:Product_ID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Product_ID>
+                    <pfx:Quantity>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Quantity>
+                    <pfx:List_Price>
+                        <xsl:value-of select="1"/>
+                    </pfx:List_Price>
+                    <pfx:Discount>
+                        <xsl:value-of select="3"/>
+                    </pfx:Discount>
+                    <pfx:Order_Status>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Order_Status>
+                    <pfx:Order_Date>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Order_Date>
+                    <pfx:Required_Date>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Required_Date>
+                    <pfx:Shipped_Date>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Shipped_Date>
+                    <pfx:Correlation_ID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </pfx:Correlation_ID>
+                </pfx:UpdateOrderReq>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="CreateAccounttReqType">
+		<xs:sequence>
+			<xs:element ref="FirstName" minOccurs="0"/>
+			<xs:element ref="LastName" minOccurs="0"/>
+			<xs:element ref="CustomerID" minOccurs="0"/>
+			<xs:element ref="Username" minOccurs="0"/>
+			<xs:element ref="Password" minOccurs="0"/>
+			<xs:element ref="ReenterPassword" minOccurs="0"/>
+			<xs:element ref="Phone" minOccurs="0"/>
+			<xs:element ref="Email" minOccurs="0"/>
+			<xs:element ref="Street" minOccurs="0"/>
+			<xs:element ref="City" minOccurs="0"/>
+			<xs:element ref="State" minOccurs="0"/>
+			<xs:element ref="ZipCode" minOccurs="0"/>
+			<xs:element ref="SessionID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateAccounttReq" type="CreateAccounttReqType"/>
+	<xs:element name="FirstName" type="xs:string"/>
+	<xs:element name="LastName" type="xs:string"/>
+	<xs:element name="CustomerID" type="xs:string"/>
+	<xs:element name="Username" type="xs:string"/>
+	<xs:element name="Password" type="xs:string"/>
+	<xs:element name="ReenterPassword" type="xs:string"/>
+	<xs:element name="Phone" type="xs:string"/>
+	<xs:element name="Email" type="xs:string"/>
+	<xs:element name="Street" type="xs:string"/>
+	<xs:element name="City" type="xs:string"/>
+	<xs:element name="State" type="xs:string"/>
+	<xs:element name="ZipCode" type="xs:string"/>
+	<xs:element name="SessionID" type="xs:string"/>
+	<xs:complexType name="CreateAccountResType">
+		<xs:sequence>
+			<xs:element ref="Username" minOccurs="0"/>
+			<xs:element ref="Password" minOccurs="0"/>
+			<xs:element ref="SessionID" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateAccountRes" type="CreateAccountResType"/>
+	<xs:element name="ResponseMessage" type="xs:string"/>
+	<xs:element name="UpdateAccountReq" type="UpdateAccountReqType"/>
+	<xs:complexType name="UpdateAccountReqType">
+		<xs:sequence>
+			<xs:element ref="FirstName" minOccurs="0"/>
+			<xs:element ref="LastName" minOccurs="0"/>
+			<xs:element ref="CustomerID" minOccurs="0"/>
+			<xs:element ref="Username" minOccurs="0"/>
+			<xs:element ref="Password" minOccurs="0"/>
+			<xs:element ref="Phone" minOccurs="0"/>
+			<xs:element ref="Email" minOccurs="0"/>
+			<xs:element ref="Street" minOccurs="0"/>
+			<xs:element ref="City" minOccurs="0"/>
+			<xs:element ref="State" minOccurs="0"/>
+			<xs:element ref="ZipCode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdateAccountResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+			<xs:element ref="SessionID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateAccountRes" type="UpdateAccountResType"/>
+	<xs:complexType name="DeleteAccountReqType">
+		<xs:sequence>
+			<xs:element ref="CustomerID" minOccurs="0"/>
+			<xs:element ref="SessionID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteAccountReq" type="DeleteAccountReqType"/>
+	<xs:complexType name="DeleteAccountResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+			<xs:element ref="SessionID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteAccountRes" type="DeleteAccountResType"/>
+	<xs:element name="GetAccountReq" type="GetAccountReqType"/>
+	<xs:complexType name="GetAccountReqType">
+		<xs:sequence>
+			<xs:element ref="CustomerID" minOccurs="0"/>
+			<xs:element ref="SessionID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetAccountResType">
+		<xs:sequence>
+			<xs:element ref="FirstName" minOccurs="0"/>
+			<xs:element ref="LastName" minOccurs="0"/>
+			<xs:element ref="CustomerID" minOccurs="0"/>
+			<xs:element ref="Username" minOccurs="0"/>
+			<xs:element ref="Password" minOccurs="0"/>
+			<xs:element ref="Phone" minOccurs="0"/>
+			<xs:element ref="Email" minOccurs="0"/>
+			<xs:element ref="Street" minOccurs="0"/>
+			<xs:element ref="City" minOccurs="0"/>
+			<xs:element ref="State" minOccurs="0"/>
+			<xs:element ref="ZipCode" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetAccountRes" type="GetAccountResType"/>
+	<xs:element name="GetAccountres">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="GetAccountRes" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

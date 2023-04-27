@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/OrderManagementsLatestSOAP/SharedResources/Schemas/FaultNewSchema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="Fault" type="FaultType"/>
+	<xs:complexType name="FaultType">
+		<xs:sequence>
+			<xs:element ref="StackTrace" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="MessageCode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StackTrace" type="xs:string"/>
+	<xs:element name="Message" type="xs:string"/>
+	<xs:element name="MessageCode" type="xs:string"/>
+</xs:schema>

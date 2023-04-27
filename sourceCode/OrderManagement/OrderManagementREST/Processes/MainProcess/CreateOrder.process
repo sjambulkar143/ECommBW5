@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:uuid="java://Custom.Custom" xmlns:ns12="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd">
+    <xsd:import namespace="http://www.EniqueSolutions.com/OrderManagement/schemas/CustomFunction2/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/OrderManagement.xsd"/>
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewOrderManagement.xsd"/>
+    <pd:name>Processes/MainProcess/CreateOrder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Payload" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>63</pd:startX>
+    <pd:startY>37</pd:startY>
+    <pd:returnBindings>
+        <EndResponse>
+            <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+        </EndResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="EndResponse" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>831</pd:endX>
+    <pd:endY>158</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <UUID>
+            <xsd:element name="UUID" type="xsd:string"/>
+        </UUID>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1677737055891</pd:targetNamespace>
+    <pd:activity name="CatchAllErrors">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1010</pd:x>
+        <pd:y>284</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateOrder">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>426</pd:x>
+        <pd:y>156</pd:y>
+        <config>
+            <processName>/Processes/SubProcess/CreateOrder.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx2:CreateOrderReq>
+                <pfx2:Order_ID>
+                    <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Order_ID"/>
+                </pfx2:Order_ID>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Customer_ID">
+                    <pfx2:Customer_ID>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Customer_ID"/>
+                    </pfx2:Customer_ID>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Product_ID">
+                    <pfx2:Product_ID>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Product_ID"/>
+                    </pfx2:Product_ID>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Quantity">
+                    <pfx2:Quantity>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Quantity"/>
+                    </pfx2:Quantity>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:List_Price">
+                    <pfx2:List_Price>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:List_Price"/>
+                    </pfx2:List_Price>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Discount">
+                    <pfx2:Discount>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Discount"/>
+                    </pfx2:Discount>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Order_Status">
+                    <pfx2:Order_Status>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Order_Status"/>
+                    </pfx2:Order_Status>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Order_Date">
+                    <pfx2:Order_Date>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Order_Date"/>
+                    </pfx2:Order_Date>
+                </xsl:if>
+                <pfx2:Required_Date>
+                    <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Required_Date"/>
+                </pfx2:Required_Date>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Shipped_Date">
+                    <pfx2:Shipped_Date>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx2:CreateOrderReq/pfx2:Shipped_Date"/>
+                    </pfx2:Shipped_Date>
+                </xsl:if>
+                <pfx2:Correlation_ID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx2:Correlation_ID>
+            </pfx2:CreateOrderReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>714</pd:x>
+        <pd:y>158</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <xsl:if test="$_processContext/ns1:ProcessContext/ProjectName">
+                    <ns12:ApplicationName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns12:ApplicationName>
+                </xsl:if>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderREST&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerFile">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>824</pd:x>
+        <pd:y>284</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <xsl:if test="$_processContext/ns1:ProcessContext/ProjectName">
+                    <ns12:ApplicationName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns12:ApplicationName>
+                </xsl:if>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderREST&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchAllErrors/exceptiondata)"/>
+                </ns12:Payload>
+                <ns12:ExceptionType>
+                    <xsl:if test="$_error/ns1:ErrorReport/MsgCode">
+                        <ns12:MessageCode>
+                            <xsl:value-of select="$_error/ns1:ErrorReport/MsgCode"/>
+                        </ns12:MessageCode>
+                    </xsl:if>
+                    <xsl:if test="$_error/ns1:ErrorReport/Msg">
+                        <ns12:ExceptionMessage>
+                            <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                        </ns12:ExceptionMessage>
+                    </xsl:if>
+                    <ns12:StackTrace>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/StackTrace"/>
+                    </ns12:StackTrace>
+                </ns12:ExceptionType>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONParserActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONParserActivity</pd:resourceType>
+        <pd:x>286</pd:x>
+        <pd:y>156</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ValidateOutputEnable>true</ValidateOutputEnable>
+            <ActivityOutputEditor ref="pfx2:CreateOrderReq"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <jsonString>
+                    <xsl:value-of select="$Start/Payload"/>
+                </jsonString>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>556</pd:x>
+        <pd:y>158</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityInputEditor ref="pfx2:CreateOrderRes"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <pfx2:CreateOrderRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$CreateOrder/pfx2:CreateOrderRes/pfx2:ResponseMessage"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateOrderRes>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>169</pd:x>
+        <pd:y>158</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogException>
+                <xsl:if test="$_processContext/ns1:ProcessContext/ProjectName">
+                    <ns12:ApplicationName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns12:ApplicationName>
+                </xsl:if>
+                <ns12:ProcessName>
+                    <xsl:value-of select="&quot;CreateOrderREST&quot;"/>
+                </ns12:ProcessName>
+                <ns12:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </ns12:LogType>
+                <ns12:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns12:CorrelationID>
+                <ns12:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </ns12:MessageType>
+                <ns12:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns12:Timestamp>
+                <ns12:Payload>
+                    <xsl:value-of select="$Start/Payload"/>
+                </ns12:Payload>
+            </ns12:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UUID">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>67</pd:x>
+        <pd:y>158</pd:y>
+        <config>
+            <variableName>UUID</variableName>
+        </config>
+        <pd:inputBindings>
+            <UUID>
+                <xsl:value-of select="uuid:getUUID()"/>
+            </UUID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse JSON</pd:from>
+        <pd:to>CreateOrder</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateOrder</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UUID</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Parse JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchAllErrors</pd:from>
+        <pd:to>ExceptionHandlerFile</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerFile</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

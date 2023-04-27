@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>JDBC Connection</name>
+    <resourceType>ae.shared.JDBCSharedResource</resourceType>
+    <config>
+        <driver>%%JDBCConn/JDBCDriver%%</driver>
+        <maxConnections>%%JDBCConn/MaxConnection%%</maxConnections>
+        <loginTimeout>%%JDBCConn/LoginTimeOut%%</loginTimeout>
+        <connectionType>JDBC</connectionType>
+        <UseSharedJndiConfig>false</UseSharedJndiConfig>
+        <location>%%JDBCConn/DatabaseURL%%</location>
+        <user>%%JDBCConn/UserName%%</user>
+        <password>%%JDBCConn/Password%%</password>
+    </config>
+</BWSharedResource>
