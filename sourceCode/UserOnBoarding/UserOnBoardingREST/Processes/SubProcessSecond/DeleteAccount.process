@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:pfx4="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx2="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" xmlns:uuid="java://Custom.Custom" xmlns:pfx="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewFaultSchema.xsd"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/NewUserOnBoarding.xsd"/>
+    <pd:name>Processes/SubProcessSecond/DeleteAccount.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:DeleteAccountReq"/>
+    <pd:startX>70</pd:startX>
+    <pd:startY>76</pd:startY>
+    <pd:returnBindings>
+        <xsl:choose>
+            <xsl:when test="contains($CatchCustomerID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns1:GlobalVariables/Input/Msg1)">
+                <pfx2:DeleteAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$CatchCustomerID/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:DeleteAccountRes>
+            </xsl:when>
+            <xsl:when test="contains($CatchCustomerID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns1:GlobalVariables/Input/Msg2) or contains($CatchCustomerID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns1:GlobalVariables/Input/Msg3)">
+                <pfx2:DeleteAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$CatchCustomerID/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:DeleteAccountRes>
+            </xsl:when>
+            <xsl:when test="exists($_error/ns:ErrorReport)">
+                <pfx2:DeleteAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error/ns:ErrorReport/Msg"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:DeleteAccountRes>
+            </xsl:when>
+            <xsl:otherwise>
+                <pfx2:DeleteAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Input/Sucess"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:DeleteAccountRes>
+            </xsl:otherwise>
+        </xsl:choose>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:DeleteAccountRes"/>
+    <pd:endX>604</pd:endX>
+    <pd:endY>200</pd:endY>
+    <pd:errorSchemas>
+        <FaultSchema ref="pfx3:Fault"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1677815380833</pd:targetNamespace>
+    <pd:activity name="CatchAllErrors">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>612</pd:x>
+        <pd:y>339</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CatchCustomerID">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>605</pd:x>
+        <pd:y>64</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Fault namespace=http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="ErrorOn">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>203</pd:x>
+        <pd:y>337</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <data>
+                    <pfx3:Fault>
+                        <pfx3:Message>
+                            <xsl:value-of select="&quot;CustomerID not exists&quot;"/>
+                        </pfx3:Message>
+                        <pfx3:MessageCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Input/Msg1"/>
+                        </pfx3:MessageCode>
+                    </pfx3:Fault>
+                </data>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerCustomertID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>764</pd:x>
+        <pd:y>67</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;DeleteAccountSOAPSUB&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </pfx4:LogType>
+                <xsl:if test="$Start/pfx2:DeleteAccountReq/pfx2:SessionID">
+                    <pfx4:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:DeleteAccountReq/pfx2:SessionID"/>
+                    </pfx4:CorrelationID>
+                </xsl:if>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchCustomerID/pfx3:Fault)"/>
+                </pfx4:Payload>
+                <pfx4:ExceptionType>
+                    <xsl:if test="$CatchCustomerID/pfx3:Fault/pfx3:MessageCode">
+                        <pfx4:MessageCode>
+                            <xsl:value-of select="$CatchCustomerID/pfx3:Fault/pfx3:MessageCode"/>
+                        </pfx4:MessageCode>
+                    </xsl:if>
+                    <xsl:if test="$CatchCustomerID/pfx3:Fault/pfx3:Message">
+                        <pfx4:ExceptionMessage>
+                            <xsl:value-of select="$CatchCustomerID/pfx3:Fault/pfx3:Message"/>
+                        </pfx4:ExceptionMessage>
+                    </xsl:if>
+                    <xsl:if test="$CatchCustomerID/pfx3:Fault/pfx3:StackTrace">
+                        <pfx4:StackTrace>
+                            <xsl:value-of select="$CatchCustomerID/pfx3:Fault/pfx3:StackTrace"/>
+                        </pfx4:StackTrace>
+                    </xsl:if>
+                </pfx4:ExceptionType>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerAllErrors">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>800</pd:x>
+        <pd:y>338</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;DeleteAccountSOAPSUB&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </pfx4:LogType>
+                <xsl:if test="$Start/pfx2:DeleteAccountReq/pfx2:SessionID">
+                    <pfx4:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:DeleteAccountReq/pfx2:SessionID"/>
+                    </pfx4:CorrelationID>
+                </xsl:if>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchAllErrors/exceptiondata)"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Fetch-Account">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>203</pd:x>
+        <pd:y>202</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/SharedResources/connections/EcommerceJDBCConeection.sharedjdbc</jdbcSharedConfig>
+            <statement>SELECT CUSTOMERID
+  FROM CREATEACCOUNT WHERE CUSTOMERID = ?
+</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>CUSTOMERID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <QueryOutputCachedSchemaColumns>CUSTOMERID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <oraObjects/>
+            <oraTables/>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <CUSTOMERID>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:DeleteAccountReq/pfx2:CustomerID)">
+                            <xsl:value-of select="$Start/pfx2:DeleteAccountReq/pfx2:CustomerID"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </CUSTOMERID>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>71</pd:x>
+        <pd:y>203</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;DeleteAccountSOAPSUB&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </pfx4:LogType>
+                <xsl:if test="$Start/pfx2:DeleteAccountReq/pfx2:SessionID">
+                    <pfx4:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:DeleteAccountReq/pfx2:SessionID"/>
+                    </pfx4:CorrelationID>
+                </xsl:if>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="tib:render-xml($Start/pfx2:DeleteAccountReq)"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>483</pd:x>
+        <pd:y>202</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;DeleteAccountSOAPSUB&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </pfx4:LogType>
+                <xsl:if test="$Start/pfx2:DeleteAccountReq/pfx2:SessionID">
+                    <pfx4:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:DeleteAccountReq/pfx2:SessionID"/>
+                    </pfx4:CorrelationID>
+                </xsl:if>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RemoveAccount">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>203</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/SharedResources/connections/EcommerceJDBCConeection.sharedjdbc</jdbcSharedConfig>
+            <statement>DELETE FROM CREATEACCOUNT
+ WHERE CUSTOMERID = ?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>CUSTOMERID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <CUSTOMERID>
+                    <xsl:choose>
+                        <xsl:when test="exists(round($Fetch-Account/resultSet/Record[1]/CUSTOMERID))">
+                            <xsl:value-of select="round($Fetch-Account/resultSet/Record[1]/CUSTOMERID)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </CUSTOMERID>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>71</pd:x>
+        <pd:y>355</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <data>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="string-length($Start/pfx2:DeleteAccountReq/pfx2:CustomerID) = 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Customer_ID should not empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Input/Msg2"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Customer_ID must be AlphaNumeric Value&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Input/Msg3"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </data>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Fetch-Account</pd:from>
+        <pd:to>RemoveAccount</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/pfx2:DeleteAccountReq/pfx2:CustomerID = $Fetch-Account/resultSet/Record/CUSTOMERID</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RemoveAccount</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Fetch-Account</pd:from>
+        <pd:to>ErrorOn</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Fetch-Account</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>string-length($Start/pfx2:DeleteAccountReq/pfx2:CustomerID) &gt;0 and  uuid:matchRegex($Start/pfx2:DeleteAccountReq/pfx2:CustomerID,"^[a-zA-Z0-9_]*$")</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchCustomerID</pd:from>
+        <pd:to>ExceptionHandlerCustomertID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchAllErrors</pd:from>
+        <pd:to>ExceptionHandlerAllErrors</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerCustomertID</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerAllErrors</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

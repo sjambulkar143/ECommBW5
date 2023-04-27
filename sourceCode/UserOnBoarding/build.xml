@@ -1,0 +1,18 @@
+<project name="UserOnBoardingREST" default="deploy" basedir=".">
+
+    <!-- Define properties -->
+    <property name="Appmanage" value="C:\BW5_Home\tra\5.7\bin\AppManage.exe" />
+    <property name="build.dir" value="${basedir}/UserOnBoardingREST/Deployable" />
+    <property name="app.name" value="UserOnBoardingREST" />
+<property name="project.bw.application" value="${basedir}/UserOnBoardingREST" />
+    <!-- Define targets -->
+	
+   
+
+    <target name="deploy" >
+        <exec executable="${Appmanage}">
+            <arg line="-deploy --propFile C:\BW5_Home\tra\5.7\bin\AppManage.tra -app ${app.name} -ear ${build.dir}/EAR/UserOnBoarding.ear -deployconfig ${build.dir}/Conf/useronboardingcof.xml -user admin -pw admin -domain javacxdomain" />
+        </exec>
+    </target>
+
+</project>

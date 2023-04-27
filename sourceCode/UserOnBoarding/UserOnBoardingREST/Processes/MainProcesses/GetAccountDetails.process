@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" xmlns:ns2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx4="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx3="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" xmlns:uuid="java://Custom.Custom" xmlns:pfx2="http://xmlns.example.com/1677470032935" xmlns:pfx6="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2">
+    <xsd:import namespace="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" schemaLocation="/SharedResources/Schemas/UserOnboarding.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/NewUserOnBoarding.xsd"/>
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewFaultSchema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1677470032935"/>
+    <pd:name>Processes/MainProcesses/GetAccountDetails.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Payload" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>56</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <EndResponse>
+            <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+        </EndResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="EndResponse" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>875</pd:endX>
+    <pd:endY>198</pd:endY>
+    <pd:errorSchemas>
+        <FaultSchema ref="pfx6:Fault"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <UUID>
+            <xsd:element name="UUID" type="xsd:string"/>
+        </UUID>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1677474192861</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>871</pd:x>
+        <pd:y>367</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>false</catchAll>
+            <fault>localname=Fault namespace=http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetAccountDetails">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>352</pd:x>
+        <pd:y>200</pd:y>
+        <config>
+            <processName>/Processes/SubProcessSecond/GetAccount.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:GetAccountReq>
+                <pfx3:CustomerID>
+                    <xsl:value-of select="$Start/Payload"/>
+                </pfx3:CustomerID>
+                <pfx3:SessionID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx3:SessionID>
+            </pfx3:GetAccountReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>177</pd:x>
+        <pd:y>199</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;GetAccountDetailsREST&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;StartLog&quot;"/>
+                </pfx4:LogType>
+                <pfx4:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx4:CorrelationID>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="$Start/Payload"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>748</pd:x>
+        <pd:y>202</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;GetAccountDetailsREST&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;EndLog&quot;"/>
+                </pfx4:LogType>
+                <pfx4:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx4:CorrelationID>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>542</pd:x>
+        <pd:y>203</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityInputEditor ref="pfx3:GetAccountRes"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <xsl:copy-of select="$GetAccountDetails/pfx3:GetAccountRes"/>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UUID">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>54</pd:x>
+        <pd:y>196</pd:y>
+        <config>
+            <variableName>UUID</variableName>
+        </config>
+        <pd:inputBindings>
+            <UUID>
+                <xsl:value-of select="uuid:getUUID()"/>
+            </UUID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetAccountDetails</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UUID</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>GetAccountDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

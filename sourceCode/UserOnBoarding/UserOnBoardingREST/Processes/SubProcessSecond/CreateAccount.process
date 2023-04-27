@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx2="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" xmlns:uuid="java://Custom.Custom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd"/>
+    <xsd:import namespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" schemaLocation="/SharedResources/Schemas/NewFaultSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/NewUserOnBoarding.xsd"/>
+    <pd:name>Processes/SubProcessSecond/CreateAccount.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:CreateAccounttReq"/>
+    <pd:startX>108</pd:startX>
+    <pd:startY>152</pd:startY>
+    <pd:returnBindings>
+        <xsl:choose>
+            <xsl:when test="contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg1) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg2) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg3) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg4) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg5) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg6) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg7) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg8) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg9) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg10) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg11) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg12) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg13) or contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg14)">
+                <pfx2:CreateAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error_ErrorOnAll/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateAccountRes>
+            </xsl:when>
+            <xsl:when test="contains($CatchUserID/pfx3:Fault/pfx3:MessageCode,$_globalVariables/ns3:GlobalVariables/Input/Msg1)">
+                <pfx2:CreateAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error_ErrorOn/pfx3:Fault/pfx3:Message"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateAccountRes>
+            </xsl:when>
+            <xsl:when test="exists($_error/ns1:ErrorReport)">
+                <pfx2:CreateAccountRes>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateAccountRes>
+            </xsl:when>
+            <xsl:otherwise>
+                <pfx2:CreateAccountRes>
+                    <xsl:if test="$Start/pfx2:CreateAccounttReq/pfx2:Username">
+                        <pfx2:Username>
+                            <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:Username"/>
+                        </pfx2:Username>
+                    </xsl:if>
+                    <xsl:if test="$Start/pfx2:CreateAccounttReq/pfx2:Password">
+                        <pfx2:Password>
+                            <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:Password"/>
+                        </pfx2:Password>
+                    </xsl:if>
+                    <xsl:if test="$Start/pfx2:CreateAccounttReq/pfx2:SessionID">
+                        <pfx2:SessionID>
+                            <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:SessionID"/>
+                        </pfx2:SessionID>
+                    </xsl:if>
+                    <pfx2:ResponseMessage>
+                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Sucess"/>
+                    </pfx2:ResponseMessage>
+                </pfx2:CreateAccountRes>
+            </xsl:otherwise>
+        </xsl:choose>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:CreateAccountRes"/>
+    <pd:endX>722</pd:endX>
+    <pd:endY>152</pd:endY>
+    <pd:errorSchemas>
+        <FaultSchema ref="pfx3:Fault"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1677815380833</pd:targetNamespace>
+    <pd:activity name="CatchAllErrors">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>726</pd:x>
+        <pd:y>278</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CatchUserID">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>725</pd:x>
+        <pd:y>35</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Fault namespace=http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CheckUserID">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>369</pd:x>
+        <pd:y>152</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>SELECT USERNAME
+  FROM CREATEACCOUNT WHERE USERNAME = ? </statement>
+            <jdbcSharedConfig>/SharedResources/connections/EcommerceJDBCConeection.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>USERNAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <QueryOutputCachedSchemaColumns>USERNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <oraObjects/>
+            <oraTables/>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <USERNAME>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx2:CreateAccounttReq/pfx2:Username)">
+                            <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:Username"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </USERNAME>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>618</pd:x>
+        <pd:y>152</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogException>
+                <ns2:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns2:ApplicationName>
+                <ns2:ProcessName>
+                    <xsl:value-of select="&quot;Create_Account Soap SUB&quot;"/>
+                </ns2:ProcessName>
+                <ns2:LogType>
+                    <xsl:value-of select="&quot;End Log&quot;"/>
+                </ns2:LogType>
+                <ns2:CorrelationID>
+                    <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:SessionID"/>
+                </ns2:CorrelationID>
+                <ns2:MessageType>
+                    <xsl:value-of select="&quot;End Log Excecuted&quot;"/>
+                </ns2:MessageType>
+                <ns2:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns2:Timestamp>
+            </ns2:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ErrorOn">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>369</pd:x>
+        <pd:y>288</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <messageCode>
+                    <xsl:value-of select="&quot;Account Already Exists with this USERID&quot;"/>
+                </messageCode>
+                <data>
+                    <pfx3:Fault>
+                        <pfx3:Message>
+                            <xsl:value-of select="&quot;Account Already Exists with this USERID&quot;"/>
+                        </pfx3:Message>
+                        <pfx3:MessageCode>
+                            <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg1"/>
+                        </pfx3:MessageCode>
+                    </pfx3:Fault>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>224</pd:x>
+        <pd:y>152</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogException>
+                <ns2:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns2:ApplicationName>
+                <ns2:ProcessName>
+                    <xsl:value-of select="&quot;Create_Account Soap Sub&quot;"/>
+                </ns2:ProcessName>
+                <ns2:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </ns2:LogType>
+                <xsl:if test="$Start/pfx2:CreateAccounttReq/pfx2:SessionID">
+                    <ns2:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:SessionID"/>
+                    </ns2:CorrelationID>
+                </xsl:if>
+                <ns2:MessageType>
+                    <xsl:value-of select="&quot;Start Log Excecuted&quot;"/>
+                </ns2:MessageType>
+                <ns2:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns2:Timestamp>
+                <ns2:Payload>
+                    <xsl:value-of select="tib:render-xml($Start/pfx2:CreateAccounttReq)"/>
+                </ns2:Payload>
+            </ns2:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UserCreate">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>499</pd:x>
+        <pd:y>151</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>INSERT INTO SYSTEM.CREATEACCOUNT (FIRSTNAME, LASTNAME,CUSTOMERID, USERNAME, PASSWORD, REENTERPASSWORD, PHONE, EMAIL, STREET, CITY, STATE, ZIPCODE)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)</statement>
+            <jdbcSharedConfig>/SharedResources/connections/EcommerceJDBCConeection.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>FIRSTNAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>LASTNAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>CUSTOMERID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>USERNAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PASSWORD</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>REENTERPASSWORD</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PHONE</parameterName>
+                    <dataType>NUMERIC</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>EMAIL</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>STREET</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>CITY</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>STATE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>ZIPCODE</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx2:CreateAccounttReq">
+                <jdbcUpdateActivityInput>
+                    <FIRSTNAME>
+                        <xsl:value-of select="pfx2:FirstName"/>
+                    </FIRSTNAME>
+                    <LASTNAME>
+                        <xsl:value-of select="pfx2:LastName"/>
+                    </LASTNAME>
+                    <CUSTOMERID>
+                        <xsl:value-of select="pfx2:CustomerID"/>
+                    </CUSTOMERID>
+                    <USERNAME>
+                        <xsl:value-of select="pfx2:Username"/>
+                    </USERNAME>
+                    <PASSWORD>
+                        <xsl:value-of select="pfx2:Password"/>
+                    </PASSWORD>
+                    <REENTERPASSWORD>
+                        <xsl:value-of select="pfx2:ReenterPassword"/>
+                    </REENTERPASSWORD>
+                    <PHONE>
+                        <xsl:value-of select="pfx2:Phone"/>
+                    </PHONE>
+                    <EMAIL>
+                        <xsl:value-of select="pfx2:Email"/>
+                    </EMAIL>
+                    <STREET>
+                        <xsl:value-of select="pfx2:Street"/>
+                    </STREET>
+                    <CITY>
+                        <xsl:value-of select="pfx2:City"/>
+                    </CITY>
+                    <STATE>
+                        <xsl:value-of select="pfx2:State"/>
+                    </STATE>
+                    <ZIPCODE>
+                        <xsl:value-of select="pfx2:ZipCode"/>
+                    </ZIPCODE>
+                </jdbcUpdateActivityInput>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerAllError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>888</pd:x>
+        <pd:y>282</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogException>
+                <ns2:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns2:ApplicationName>
+                <ns2:ProcessName>
+                    <xsl:value-of select="&quot;Create_Account Soap Sub&quot;"/>
+                </ns2:ProcessName>
+                <ns2:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns2:LogType>
+                <xsl:if test="$Start/pfx2:CreateAccounttReq/pfx2:SessionID">
+                    <ns2:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:SessionID"/>
+                    </ns2:CorrelationID>
+                </xsl:if>
+                <ns2:MessageType>
+                    <xsl:value-of select="&quot;ErrorFound&quot;"/>
+                </ns2:MessageType>
+                <ns2:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns2:Timestamp>
+                <ns2:Payload>
+                    <xsl:value-of select="$CatchAllErrors/exceptiondata/*"/>
+                </ns2:Payload>
+                <ns2:ExceptionType>
+                    <xsl:if test="$_error/ns1:ErrorReport/MsgCode">
+                        <ns2:MessageCode>
+                            <xsl:value-of select="$_error/ns1:ErrorReport/MsgCode"/>
+                        </ns2:MessageCode>
+                    </xsl:if>
+                    <xsl:if test="$_error/ns1:ErrorReport/Msg">
+                        <ns2:ExceptionMessage>
+                            <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                        </ns2:ExceptionMessage>
+                    </xsl:if>
+                    <xsl:if test="$_error/ns1:ErrorReport/StackTrace">
+                        <ns2:StackTrace>
+                            <xsl:value-of select="$_error/ns1:ErrorReport/StackTrace"/>
+                        </ns2:StackTrace>
+                    </xsl:if>
+                </ns2:ExceptionType>
+            </ns2:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExceptionHandlerCustID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>876</pd:x>
+        <pd:y>37</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/ExceptionHandlerProcess/ExceptionHandler.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogException>
+                <ns2:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns2:ApplicationName>
+                <ns2:ProcessName>
+                    <xsl:value-of select="&quot;Create_Account Soap Sub&quot;"/>
+                </ns2:ProcessName>
+                <ns2:LogType>
+                    <xsl:value-of select="&quot;Exception_Log&quot;"/>
+                </ns2:LogType>
+                <xsl:if test="$Start/pfx2:CreateAccounttReq/pfx2:SessionID">
+                    <ns2:CorrelationID>
+                        <xsl:value-of select="$Start/pfx2:CreateAccounttReq/pfx2:SessionID"/>
+                    </ns2:CorrelationID>
+                </xsl:if>
+                <ns2:MessageType>
+                    <xsl:value-of select="&quot;Error_Found&quot;"/>
+                </ns2:MessageType>
+                <ns2:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns2:Timestamp>
+                <ns2:Payload>
+                    <xsl:value-of select="tib:render-xml($CatchUserID/pfx3:Fault)"/>
+                </ns2:Payload>
+                <ns2:ExceptionType>
+                    <xsl:if test="$CatchUserID/pfx3:Fault/pfx3:MessageCode">
+                        <ns2:MessageCode>
+                            <xsl:value-of select="$CatchUserID/pfx3:Fault/pfx3:MessageCode"/>
+                        </ns2:MessageCode>
+                    </xsl:if>
+                    <xsl:if test="$CatchUserID/pfx3:Fault/pfx3:Message">
+                        <ns2:ExceptionMessage>
+                            <xsl:value-of select="$CatchUserID/pfx3:Fault/pfx3:Message"/>
+                        </ns2:ExceptionMessage>
+                    </xsl:if>
+                    <xsl:if test="$CatchUserID/pfx3:Fault/pfx3:StackTrace">
+                        <ns2:StackTrace>
+                            <xsl:value-of select="$CatchUserID/pfx3:Fault/pfx3:StackTrace"/>
+                        </ns2:StackTrace>
+                    </xsl:if>
+                </ns2:ExceptionType>
+            </ns2:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ErrorOnAll">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>226</pd:x>
+        <pd:y>283</pd:y>
+        <config>
+            <faultName>FaultSchema</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <xsl:choose>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:CustomerID) = 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Customer_ID should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg1"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:CustomerID, &quot;^[a-zA-Z0-9_]*$&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Customer_ID must be Aphanumeric Values&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg2"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:Username) &lt; 5">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;User_ID must be accept Greater 5 values&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg3"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:Password) = 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Password Should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg4"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:Password, &quot;(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Password Must be in Correct Format&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg5"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:ReenterPassword)= 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Re_EnterPassword Should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg6"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:ReenterPassword, &quot;(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;ReEnter_Password Should be Correct Format&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg7"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="$Start/pfx2:CreateAccounttReq/pfx2:Password !=$Start/pfx2:CreateAccounttReq/pfx2:ReenterPassword">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Password Mismatch&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg8"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:Phone) = 0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Phone Number Should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg9"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:Phone, &quot;[0-9]{10}&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Phone Number Must be 10 digit&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg10"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:Email) =0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Email should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg11"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="not(uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:Email,&quot;([A-Za-z0-9]+)@([a-zA-Z]+)([\.])([a-zA-Z]+)&quot;))">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Email not in correct format&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg12"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:when test="string-length($Start/pfx2:CreateAccounttReq/pfx2:ZipCode) =0">
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;ZipCode Should not be Empty&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg13"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx3:Fault>
+                                <pfx3:Message>
+                                    <xsl:value-of select="&quot;Zipcode Must be 6 digit&quot;"/>
+                                </pfx3:Message>
+                                <pfx3:MessageCode>
+                                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/Input/Msg14"/>
+                                </pfx3:MessageCode>
+                            </pfx3:Fault>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CheckUserID</pd:from>
+        <pd:to>UserCreate</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UserCreate</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CheckUserID</pd:from>
+        <pd:to>ErrorOn</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($CheckUserID/resultSet/Record/USERNAME)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>CheckUserID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>string-length($Start/pfx2:CreateAccounttReq/pfx2:CustomerID) &gt;0  and  uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:CustomerID, "^[a-zA-Z0-9_]*$") and string-length($Start/pfx2:CreateAccounttReq/pfx2:Username) &gt;5 and  uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:Password, "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$") and uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:ReenterPassword, "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$") and $Start/pfx2:CreateAccounttReq/pfx2:Password = $Start/pfx2:CreateAccounttReq/pfx2:ReenterPassword  and string-length($Start/pfx2:CreateAccounttReq/pfx2:Phone) &gt;0 and uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:Phone, "[0-9]{10}") and string-length($Start/pfx2:CreateAccounttReq/pfx2:Email) &gt;0 and uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:Email,"([A-Za-z0-9]+)@([a-zA-Z]+)([\.])([a-zA-Z]+)") and string-length($Start/pfx2:CreateAccounttReq/pfx2:ZipCode) &gt;0 and uuid:matchRegex($Start/pfx2:CreateAccounttReq/pfx2:ZipCode, "[0-9]{6}")</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchUserID</pd:from>
+        <pd:to>ExceptionHandlerCustID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchAllErrors</pd:from>
+        <pd:to>ExceptionHandlerAllError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerCustID</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExceptionHandlerAllError</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>ErrorOnAll</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

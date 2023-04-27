@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/UserOnBoardingREST/SharedResources/Schemas/Test.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/UserOnBoardingREST/SharedResources/Schemas/Test.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="Employee" type="xs:string"/>
+	<xs:complexType name="Employee_Type">
+		<xs:sequence>
+			<xs:element ref="Emp_Name" minOccurs="0"/>
+			<xs:element ref="Emp_LastName" minOccurs="0"/>
+			<xs:element ref="Emp_Sal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Emp_Name" type="xs:string"/>
+	<xs:element name="Emp_LastName" type="xs:string"/>
+	<xs:element name="Emp_Sal" type="xs:string"/>
+</xs:schema>

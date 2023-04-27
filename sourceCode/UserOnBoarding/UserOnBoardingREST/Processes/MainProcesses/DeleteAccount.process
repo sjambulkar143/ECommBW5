@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx3="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" xmlns:uuid="java://Custom.Custom" xmlns:pfx2="http://xmlns.example.com/1677470032935" xmlns:pfx="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd">
+    <xsd:import namespace="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" schemaLocation="/SharedResources/Schemas/UserOnboarding.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/NewUserOnBoarding.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1677470032935"/>
+    <pd:name>Processes/MainProcesses/DeleteAccount.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Payload" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>36</pd:startY>
+    <pd:returnBindings>
+        <EndResponse>
+            <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+        </EndResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="EndResponse" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>812</pd:endX>
+    <pd:endY>177</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <UUID>
+            <xsd:element name="UUID" type="xsd:string"/>
+        </UUID>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1677474192861</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>813</pd:x>
+        <pd:y>332</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="DeleteAccountDetails">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>399</pd:x>
+        <pd:y>177</pd:y>
+        <config>
+            <processName>/Processes/SubProcessSecond/DeleteAccount.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:DeleteAccountReq>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:DeleteAccountReq/pfx3:CustomerID">
+                    <pfx3:CustomerID>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:DeleteAccountReq/pfx3:CustomerID"/>
+                    </pfx3:CustomerID>
+                </xsl:if>
+                <pfx3:SessionID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx3:SessionID>
+            </pfx3:DeleteAccountReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>133</pd:x>
+        <pd:y>176</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;DeleteAccountREST&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </pfx4:LogType>
+                <pfx4:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx4:CorrelationID>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;Startlogexcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="$Start/Payload"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>659</pd:x>
+        <pd:y>178</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;DeleteAccountREST&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </pfx4:LogType>
+                <pfx4:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx4:CorrelationID>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONParserActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONParserActivity</pd:resourceType>
+        <pd:x>264</pd:x>
+        <pd:y>177</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityOutputEditor ref="pfx3:DeleteAccountReq"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <jsonString>
+                    <xsl:value-of select="$Start/Payload"/>
+                </jsonString>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>520</pd:x>
+        <pd:y>177</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityInputEditor ref="pfx3:DeleteAccountRes"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <xsl:copy-of select="$DeleteAccountDetails/pfx3:DeleteAccountRes"/>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UUID">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>27</pd:x>
+        <pd:y>172</pd:y>
+        <config>
+            <variableName>UUID</variableName>
+        </config>
+        <pd:inputBindings>
+            <UUID>
+                <xsl:value-of select="uuid:getUUID()"/>
+            </UUID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse JSON</pd:from>
+        <pd:to>DeleteAccountDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DeleteAccountDetails</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Parse JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UUID</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

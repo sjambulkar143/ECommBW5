@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pfx3="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" xmlns:uuid="java://Custom.Custom" xmlns:pfx2="http://xmlns.example.com/1677470032935" xmlns:pfx="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd">
+    <xsd:import namespace="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" schemaLocation="/SharedResources/Schemas/UserOnboarding.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/NewUserOnBoarding.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1677470032935"/>
+    <pd:name>Processes/MainProcesses/UpdateAccountDetails.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Payload" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>60</pd:startY>
+    <pd:returnBindings>
+        <EndResponse>
+            <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+        </EndResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="EndResponse" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>852</pd:endX>
+    <pd:endY>192</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <UUID>
+            <xsd:element name="UUID" type="xsd:string"/>
+        </UUID>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1677474192861</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>851</pd:x>
+        <pd:y>339</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>124</pd:x>
+        <pd:y>191</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;UpdateAccountDetailsREST&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;StartLog&quot;"/>
+                </pfx4:LogType>
+                <pfx4:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx4:CorrelationID>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;StartLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="$Start/Payload"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>691</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <pfx4:LogException>
+                <pfx4:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </pfx4:ApplicationName>
+                <pfx4:ProcessName>
+                    <xsl:value-of select="&quot;UpdateAccountDetailsREST&quot;"/>
+                </pfx4:ProcessName>
+                <pfx4:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </pfx4:LogType>
+                <pfx4:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx4:CorrelationID>
+                <pfx4:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </pfx4:MessageType>
+                <pfx4:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:Timestamp>
+                <pfx4:Payload>
+                    <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+                </pfx4:Payload>
+            </pfx4:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONParserActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONParserActivity</pd:resourceType>
+        <pd:x>251</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ValidateOutputEnable>true</ValidateOutputEnable>
+            <ActivityOutputEditor ref="pfx3:UpdateAccountReq"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <jsonString>
+                    <xsl:value-of select="$Start/Payload"/>
+                </jsonString>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ActivityInputEditor ref="pfx3:UpdateAccountRes"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <xsl:copy-of select="$UpdateAccountDetails/pfx3:UpdateAccountRes"/>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UpdateAccountDetails">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>388</pd:x>
+        <pd:y>189</pd:y>
+        <config>
+            <processName>/Processes/SubProcessSecond/UpdateAccount.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:UpdateAccountReq>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:FirstName">
+                    <pfx3:FirstName>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:FirstName"/>
+                    </pfx3:FirstName>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:LastName">
+                    <pfx3:LastName>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:LastName"/>
+                    </pfx3:LastName>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:CustomerID">
+                    <pfx3:CustomerID>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:CustomerID"/>
+                    </pfx3:CustomerID>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Username">
+                    <pfx3:Username>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Username"/>
+                    </pfx3:Username>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Password">
+                    <pfx3:Password>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Password"/>
+                    </pfx3:Password>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:ReenterPassword">
+                    <pfx3:ReenterPassword>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:ReenterPassword"/>
+                    </pfx3:ReenterPassword>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Phone">
+                    <pfx3:Phone>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Phone"/>
+                    </pfx3:Phone>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Email">
+                    <pfx3:Email>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Email"/>
+                    </pfx3:Email>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Street">
+                    <pfx3:Street>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:Street"/>
+                    </pfx3:Street>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:City">
+                    <pfx3:City>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:City"/>
+                    </pfx3:City>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:State">
+                    <pfx3:State>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:State"/>
+                    </pfx3:State>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:ZipCode">
+                    <pfx3:ZipCode>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:UpdateAccountReq/pfx3:ZipCode"/>
+                    </pfx3:ZipCode>
+                </xsl:if>
+                <pfx3:SessionID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx3:SessionID>
+            </pfx3:UpdateAccountReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UUID">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>27</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <variableName>UUID</variableName>
+        </config>
+        <pd:inputBindings>
+            <UUID>
+                <xsl:value-of select="uuid:getUUID()"/>
+            </UUID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse JSON</pd:from>
+        <pd:to>UpdateAccountDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UpdateAccountDetails</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Parse JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UUID</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

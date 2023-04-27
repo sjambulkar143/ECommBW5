@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" xmlns:pfx2="http://xmlns.example.com/1677470032935" xmlns:uuid="java://Custom.Custom" xmlns:pfx="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd">
+    <xsd:import namespace="http://EniqueSolutions.com/schemas/CommonModules/SharedResources/Schemas/UserOnboarding.xsd" schemaLocation="/SharedResources/Schemas/UserOnboarding.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/NewUserOnBoarding.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1677470032935"/>
+    <pd:name>Processes/MainProcesses/CreateAccount.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Payload" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>80</pd:startX>
+    <pd:startY>35</pd:startY>
+    <pd:returnBindings>
+        <EndResponse>
+            <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+        </EndResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="EndResponse" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>846</pd:endX>
+    <pd:endY>231</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <UUID>
+            <xsd:element name="UUID" type="xsd:string"/>
+        </UUID>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1677474192861</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>857</pd:x>
+        <pd:y>438</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateAccount">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>384</pd:x>
+        <pd:y>232</pd:y>
+        <config>
+            <processName>/Processes/SubProcessSecond/CreateAccount.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:CreateAccounttReq>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:FirstName">
+                    <pfx3:FirstName>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:FirstName"/>
+                    </pfx3:FirstName>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:LastName">
+                    <pfx3:LastName>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:LastName"/>
+                    </pfx3:LastName>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:CustomerID">
+                    <pfx3:CustomerID>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:CustomerID"/>
+                    </pfx3:CustomerID>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Username">
+                    <pfx3:Username>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Username"/>
+                    </pfx3:Username>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Password">
+                    <pfx3:Password>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Password"/>
+                    </pfx3:Password>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:ReenterPassword">
+                    <pfx3:ReenterPassword>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:ReenterPassword"/>
+                    </pfx3:ReenterPassword>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Phone">
+                    <pfx3:Phone>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Phone"/>
+                    </pfx3:Phone>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Email">
+                    <pfx3:Email>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Email"/>
+                    </pfx3:Email>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Street">
+                    <pfx3:Street>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:Street"/>
+                    </pfx3:Street>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:City">
+                    <pfx3:City>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:City"/>
+                    </pfx3:City>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:State">
+                    <pfx3:State>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:State"/>
+                    </pfx3:State>
+                </xsl:if>
+                <xsl:if test="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:ZipCode">
+                    <pfx3:ZipCode>
+                        <xsl:value-of select="$Parse-JSON/ns:ActivityOutputClass/pfx3:CreateAccounttReq/pfx3:ZipCode"/>
+                    </pfx3:ZipCode>
+                </xsl:if>
+                <pfx3:SessionID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </pfx3:SessionID>
+            </pfx3:CreateAccounttReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>706</pd:x>
+        <pd:y>231</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogException>
+                <ns2:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns2:ApplicationName>
+                <ns2:ProcessName>
+                    <xsl:value-of select="&quot;CreateAccountREST&quot;"/>
+                </ns2:ProcessName>
+                <ns2:LogType>
+                    <xsl:value-of select="&quot;End_Log&quot;"/>
+                </ns2:LogType>
+                <ns2:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns2:CorrelationID>
+                <ns2:MessageType>
+                    <xsl:value-of select="&quot;EndLogExcecuted&quot;"/>
+                </ns2:MessageType>
+                <ns2:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns2:Timestamp>
+                <ns2:Payload>
+                    <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+                </ns2:Payload>
+            </ns2:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>564</pd:x>
+        <pd:y>231</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ValidateIntputEnable>true</ValidateIntputEnable>
+            <ActivityInputEditor ref="pfx3:CreateAccountRes"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <xsl:copy-of select="$CreateAccount/pfx3:CreateAccountRes"/>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>87</pd:x>
+        <pd:y>231</pd:y>
+        <config>
+            <processName>/ExceptionProcesses/LogHandlerProcess/LogException.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogException>
+                <ns2:ApplicationName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </ns2:ApplicationName>
+                <ns2:ProcessName>
+                    <xsl:value-of select="&quot;CreateAccountREST&quot;"/>
+                </ns2:ProcessName>
+                <ns2:LogType>
+                    <xsl:value-of select="&quot;Start_Log&quot;"/>
+                </ns2:LogType>
+                <ns2:CorrelationID>
+                    <xsl:value-of select="$UUID/UUID"/>
+                </ns2:CorrelationID>
+                <ns2:MessageType>
+                    <xsl:value-of select="&quot;Start Log Excecuted&quot;"/>
+                </ns2:MessageType>
+                <ns2:Timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns2:Timestamp>
+                <ns2:Payload>
+                    <xsl:value-of select="$Start/Payload"/>
+                </ns2:Payload>
+            </ns2:LogException>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UUID">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>79</pd:x>
+        <pd:y>122</pd:y>
+        <config>
+            <variableName>UUID</variableName>
+        </config>
+        <pd:inputBindings>
+            <UUID>
+                <xsl:value-of select="uuid:getUUID()"/>
+            </UUID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONParserActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONParserActivity</pd:resourceType>
+        <pd:x>220</pd:x>
+        <pd:y>234</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <ValidateOutputEnable>true</ValidateOutputEnable>
+            <ActivityOutputEditor ref="pfx3:CreateAccounttReq"/>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <jsonString>
+                    <xsl:value-of select="$Start/Payload"/>
+                </jsonString>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateAccount</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UUID</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>Parse JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse JSON</pd:from>
+        <pd:to>CreateAccount</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

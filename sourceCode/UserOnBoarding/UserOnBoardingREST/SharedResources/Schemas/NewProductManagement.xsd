@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2"
+	 targetNamespace="http://www.EniqueSolutions.com/schemas/NewUserOnBoardingSOAP/SharedResources/Schemas/Schema.xsd2"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="AddProductReq" type="AddProductReqType"/>
+	<xs:complexType name="AddProductReqType">
+		<xs:sequence>
+			<xs:element ref="FileLocation" minOccurs="0"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FileLocation" type="xs:string"/>
+	<xs:element name="CorrelationID" type="xs:string"/>
+	<xs:element name="AddProductRes" type="AddProductResType"/>
+	<xs:complexType name="AddProductResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResponseMessage" type="xs:string"/>
+	<xs:element name="UpdateProductReq" type="UpdateProductReqType"/>
+	<xs:complexType name="UpdateProductReqType">
+		<xs:sequence>
+			<xs:element ref="FileLocation" minOccurs="0"/>
+			<xs:element ref="CorrelationID"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateProductRes" type="UpdateProductResType"/>
+	<xs:complexType name="UpdateProductResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetIndividualProductReq" type="GetIndividualProductReqType"/>
+	<xs:complexType name="GetIndividualProductReqType">
+		<xs:sequence>
+			<xs:element ref="Product_ID"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Product_ID" type="xs:string"/>
+	<xs:element name="GetIndividualProductRes" type="GetIndividualProductResType"/>
+	<xs:complexType name="GetIndividualProductResType">
+		<xs:sequence>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Product_Name" minOccurs="0"/>
+			<xs:element ref="Brand_ID" minOccurs="0"/>
+			<xs:element ref="Category_ID" minOccurs="0"/>
+			<xs:element ref="Model_Year" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Product_Name" type="xs:string"/>
+	<xs:element name="Brand_ID" type="xs:string"/>
+	<xs:element name="Category_ID" type="xs:string"/>
+	<xs:element name="Model_Year" type="xs:string"/>
+	<xs:element name="List_Price" type="xs:string"/>
+	<xs:element name="GetAllProductsReq" type="GetAllProductsReqType"/>
+	<xs:complexType name="GetAllProductsReqType">
+		<xs:sequence>
+			<xs:element ref="GetAllProducts" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetAllProducts" type="xs:string"/>
+	<xs:element name="GetAllProductsRes" type="GetAllProductsResType"/>
+	<xs:complexType name="GetAllProductsResType">
+		<xs:sequence>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Product_Name" minOccurs="0"/>
+			<xs:element ref="Brand_ID" minOccurs="0"/>
+			<xs:element ref="Category_ID" minOccurs="0"/>
+			<xs:element ref="Model_Year" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetProductByCategoryReq" type="GetProductByCategoryReqType"/>
+	<xs:complexType name="GetProductByCategoryReqType">
+		<xs:sequence>
+			<xs:element ref="Category_ID"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetProductByCategoryRes" type="GetProductByCategoryResType"/>
+	<xs:complexType name="GetProductByCategoryResType">
+		<xs:sequence>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Product_Name" minOccurs="0"/>
+			<xs:element ref="Brand_ID" minOccurs="0"/>
+			<xs:element ref="Category_ID" minOccurs="0"/>
+			<xs:element ref="Model_Year" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="ResponseMessage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteProductReq" type="DeleteProductReqType"/>
+	<xs:complexType name="DeleteProductReqType">
+		<xs:sequence>
+			<xs:element ref="Product_ID"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteProductRes" type="DeleteProductResType"/>
+	<xs:complexType name="DeleteProductResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateDataFormat" type="UpdateDataFormatType"/>
+	<xs:complexType name="UpdateDataFormatType">
+		<xs:sequence>
+			<xs:element ref="Product_ID"/>
+			<xs:element ref="Product_Name"/>
+			<xs:element ref="Brand_ID"/>
+			<xs:element ref="Category_ID"/>
+			<xs:element ref="Model_Year"/>
+			<xs:element ref="List_Price"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AddIndiviualProductReq" type="AddIndiviualProductReqType"/>
+	<xs:complexType name="AddIndiviualProductReqType">
+		<xs:sequence>
+			<xs:element ref="Product_ID" minOccurs="0"/>
+			<xs:element ref="Product_Name" minOccurs="0"/>
+			<xs:element ref="Brand_ID" minOccurs="0"/>
+			<xs:element ref="Category_ID" minOccurs="0"/>
+			<xs:element ref="Model_Year" minOccurs="0"/>
+			<xs:element ref="List_Price" minOccurs="0"/>
+			<xs:element ref="CorrelationID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddIndiviualProductResType">
+		<xs:sequence>
+			<xs:element ref="ResponseMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AddIndiviualProductRes" type="GetIndividualProductResType"/>
+</xs:schema>

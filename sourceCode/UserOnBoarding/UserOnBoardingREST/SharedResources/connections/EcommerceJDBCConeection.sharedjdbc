@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>EcommerceJDBCConeection</name>
+    <resourceType>ae.shared.JDBCSharedResource</resourceType>
+    <config>
+        <driver>%%OracleConnection/JDBCDriver%%</driver>
+        <maxConnections>10</maxConnections>
+        <loginTimeout>%%OracleConnection/LoginTimeOut%%</loginTimeout>
+        <connectionType>JDBC</connectionType>
+        <UseSharedJndiConfig>false</UseSharedJndiConfig>
+        <location>%%OracleConnection/DatabaseURL%%</location>
+        <user>%%OracleConnection/Username%%</user>
+        <password>%%OracleConnection/Password%%</password>
+    </config>
+</BWSharedResource>
